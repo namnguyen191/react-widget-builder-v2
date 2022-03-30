@@ -1,0 +1,73 @@
+{
+  "root": "apps/widget-builder",
+  "sourceRoot": "apps/widget-builder/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/widget-builder",
+        "index": "apps/widget-builder/src/index.html",
+        "baseHref": "/",
+        "main": "apps/widget-builder/src/main.tsx",
+        "polyfills": "apps/widget-builder/src/polyfills.ts",
+        "tsConfig": "apps/widget-builder/tsconfig.app.json",
+        "assets": [
+          "apps/widget-builder/src/favicon.ico",
+          "apps/widget-builder/src/assets"
+        ],
+        "styles": ["apps/widget-builder/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/widget-builder/src/environments/environment.ts",
+              "with": "apps/widget-builder/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "widget-builder:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "widget-builder:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/widget-builder/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/widget-builder"],
+      "options": {
+        "jestConfig": "apps/widget-builder/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "widget-builder": "apps/widget-builder",
+    "widget-builder-e2e": "apps/widget-builder-e2e"
+  }
+}
