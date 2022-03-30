@@ -1,0 +1,25 @@
+{
+  "root": "libs/shared/components/code-editor",
+  "sourceRoot": "libs/shared/components/code-editor/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/components/code-editor/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/components/code-editor"],
+      "options": {
+        "jestConfig": "libs/shared/components/code-editor/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

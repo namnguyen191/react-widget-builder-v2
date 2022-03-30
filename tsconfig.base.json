@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@uihub/features/home": ["libs/features/home/src/index.ts"]
+      "@uihub/features/home": ["libs/features/home/src/index.ts"],
+      "@uihub/shared/components/code-editor": [
+        "libs/shared/components/code-editor/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
