@@ -1,14 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-import NxWelcome from './nx-welcome';
+import { FeaturesHome } from '@uihub/features/home';
+import { Route, Routes } from 'react-router-dom';
 
-export function App() {
+const App: React.FC = () => {
   return (
-    <>
-      <NxWelcome title="widget-builder" />
-      <div />
-    </>
+    <Routes>
+      <Route path="/" element={<FeaturesHome />} />
+    </Routes>
   );
-}
+};
 
 export default App;
