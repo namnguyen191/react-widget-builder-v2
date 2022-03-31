@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "features-graphql": "libs/features/graphql",
     "features-home": "libs/features/home",
     "shared-components-code-editor": "libs/shared/components/code-editor",
     "widget-builder": "apps/widget-builder",

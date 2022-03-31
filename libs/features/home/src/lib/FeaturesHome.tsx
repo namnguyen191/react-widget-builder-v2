@@ -6,6 +6,7 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const FeaturesHome: React.FC = () => {
   return (
@@ -28,7 +29,9 @@ export const FeaturesHome: React.FC = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Go to Graphql!</Button>
+            <Link to="/graphql">
+              <Button size="small">Go to Graphql!</Button>
+            </Link>
           </CardActions>
         </Card>
       </Grid>
