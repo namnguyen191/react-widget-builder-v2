@@ -9,13 +9,17 @@ import styles from './SharedComponentsCodeEditor.module.scss';
 export type SharedComponentsCodeEditorProps = {
   initialValue?: string;
   onChange?: (value: string | undefined) => void;
+  /** The language for the editor. Default to javascript */
   language?: string;
+  /** Allow overriding prettier config which will affect
+   * the "Format" function. By default formatting only works for javascript */
+  prettierConfigOverride?: prettier.Options;
 };
 
 export const SharedComponentsCodeEditor: React.FC<
   SharedComponentsCodeEditorProps
 > = (props) => {
-  const { initialValue, onChange, language } = props;
+  const { initialValue, onChange, language, prettierConfigOverride } = props;
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
@@ -37,13 +41,16 @@ export const SharedComponentsCodeEditor: React.FC<
     const unformatted = editorRef.current?.getValue();
 
     const formatted = prettier
-      .format(unformatted ?? '', {
-        parser: 'babel',
-        plugins: [parser],
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-      })
+      .format(
+        unformatted ?? '',
+        prettierConfigOverride ?? {
+          parser: 'babel',
+          plugins: [parser],
+          useTabs: false,
+          semi: true,
+          singleQuote: true,
+        }
+      )
       .replace(/\n$/, '');
 
     editorRef.current?.setValue(formatted);
