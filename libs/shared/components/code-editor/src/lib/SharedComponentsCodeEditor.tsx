@@ -14,12 +14,19 @@ export type SharedComponentsCodeEditorProps = {
   /** Allow overriding prettier config which will affect
    * the "Format" function. By default formatting only works for javascript */
   prettierConfigOverride?: prettier.Options;
+  enableFormat?: boolean;
 };
 
 export const SharedComponentsCodeEditor: React.FC<
   SharedComponentsCodeEditorProps
 > = (props) => {
-  const { initialValue, onChange, language, prettierConfigOverride } = props;
+  const {
+    initialValue,
+    onChange,
+    language,
+    prettierConfigOverride,
+    enableFormat = true,
+  } = props;
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
@@ -58,14 +65,16 @@ export const SharedComponentsCodeEditor: React.FC<
 
   return (
     <div className={styles['editorWrapper']}>
-      <Button
-        className={`${styles['buttonFormat']}`}
-        size="small"
-        variant="outlined"
-        onClick={onFormatClick}
-      >
-        Format
-      </Button>
+      {enableFormat && (
+        <Button
+          className={`${styles['buttonFormat']}`}
+          size="small"
+          variant="outlined"
+          onClick={onFormatClick}
+        >
+          Format
+        </Button>
+      )}
 
       <MonacoEditor
         onMount={handleEditorDidMount}
