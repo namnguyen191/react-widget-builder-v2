@@ -4,6 +4,7 @@ import type monaco from 'monaco-editor';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import { useRef } from 'react';
+import { toast } from 'react-toastify';
 import styles from './SharedComponentsCodeEditor.module.scss';
 
 export type SharedComponentsCodeEditorProps = {
@@ -47,18 +48,28 @@ export const SharedComponentsCodeEditor: React.FC<
   const onFormatClick = () => {
     const unformatted = editorRef.current?.getValue();
 
-    const formatted = prettier
-      .format(
-        unformatted ?? '',
-        prettierConfigOverride ?? {
-          parser: 'babel',
-          plugins: [parser],
-          useTabs: false,
-          semi: true,
-          singleQuote: true,
-        }
-      )
-      .replace(/\n$/, '');
+    if (!unformatted) return;
+
+    let formatted = unformatted;
+
+    try {
+      formatted = prettier
+        .format(
+          unformatted ?? '',
+          prettierConfigOverride ?? {
+            parser: 'babel',
+            plugins: [parser],
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+          }
+        )
+        .replace(/\n$/, '');
+    } catch (err: any) {
+      toast(err?.message, {
+        autoClose: false,
+      });
+    }
 
     editorRef.current?.setValue(formatted);
   };
