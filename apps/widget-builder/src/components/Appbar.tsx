@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
 const Appbar: React.FC = () => {
   return (
@@ -16,6 +17,8 @@ const Appbar: React.FC = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            component={Link}
+            to={'/'}
           >
             <ViewQuiltIcon />
           </IconButton>
