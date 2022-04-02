@@ -10,10 +10,18 @@ export const stringToGraphQL = (input: string) => {
     input = input.substring(0, input.length - 1);
   }
   input = input.replace(/\\/g, '');
-  input = prettier.format(input, {
-    parser: 'graphql',
-    plugins: [graphQLParser],
-  });
+  try {
+    input = prettier.format(input, {
+      parser: 'graphql',
+      plugins: [graphQLParser],
+    });
+  } catch (err) {
+    console.log(
+      'Fail to create Graphql code from raw string due to invalid fomart: ',
+      err
+    );
+    input = '';
+  }
   return input;
 };
 
