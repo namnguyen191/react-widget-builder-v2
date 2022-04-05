@@ -8,14 +8,24 @@ import { toast } from 'react-toastify';
 import styles from './SharedComponentsCodeEditor.module.scss';
 
 export type SharedComponentsCodeEditorProps = {
+  /** The initial codes */
   initialValue?: string;
+  /**
+   * Callback that get execute whenever the code inside the editor change due to
+   * user input (so programmatice change won't be detected)
+   */
   onChange?: (value: string | undefined) => void;
   /** The language for the editor. Default to javascript */
   language?: string;
   /** Allow overriding prettier config which will affect
    * the "Format" function. By default formatting only works for javascript */
   prettierConfigOverride?: prettier.Options;
+  /** Enable the format button. Default is true */
   enableFormat?: boolean;
+  /** The theme of the editor. Default is dark  */
+  theme?: 'vs-dark' | 'light';
+  /** Control whether the editor is readonly. Default is false */
+  readonly?: boolean;
 };
 
 export const SharedComponentsCodeEditor: React.FC<
@@ -27,6 +37,8 @@ export const SharedComponentsCodeEditor: React.FC<
     language,
     prettierConfigOverride,
     enableFormat = true,
+    theme = 'vs-dark',
+    readonly = false,
   } = props;
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -91,7 +103,7 @@ export const SharedComponentsCodeEditor: React.FC<
         onMount={handleEditorDidMount}
         onChange={handleEditorChange}
         value={initialValue}
-        theme="vs-dark"
+        theme={theme}
         language={language ?? 'javascript'}
         height="100%"
         options={{
@@ -104,6 +116,7 @@ export const SharedComponentsCodeEditor: React.FC<
           scrollBeyondLastLine: false,
           automaticLayout: true,
           tabSize: 2,
+          readOnly: readonly,
         }}
       />
     </div>
