@@ -1,0 +1,25 @@
+{
+  "root": "libs/shared/components/text-editor",
+  "sourceRoot": "libs/shared/components/text-editor/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/components/text-editor/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/components/text-editor"],
+      "options": {
+        "jestConfig": "libs/shared/components/text-editor/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
