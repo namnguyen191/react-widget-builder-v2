@@ -1,0 +1,27 @@
+.container {
+  position: relative;
+  margin: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  .dataButton {
+    align-self: flex-end;
+  }
+
+  .editorsContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    .codeEditorContainer {
+      height: 65vh;
+
+      &.transformResult {
+        pointer-events: none;
+      }
+    }
+  }
+}

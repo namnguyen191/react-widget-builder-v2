@@ -1,0 +1,23 @@
+{
+  "root": "libs/features/stjs-editor",
+  "sourceRoot": "libs/features/stjs-editor/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/features/stjs-editor/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/features/stjs-editor"],
+      "options": {
+        "jestConfig": "libs/features/stjs-editor/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
