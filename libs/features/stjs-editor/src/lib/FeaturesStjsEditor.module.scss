@@ -7,17 +7,12 @@
   gap: 0.5rem;
 
   .dataButton {
-    // align-self: flex-end;
     position: fixed;
     bottom: 1rem;
     right: 1rem;
   }
 
   .editorsContainer {
-    width: 100%;
-    // display: grid;
-    // grid-template-columns: 1fr 1fr;
-    // gap: 1rem;
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;

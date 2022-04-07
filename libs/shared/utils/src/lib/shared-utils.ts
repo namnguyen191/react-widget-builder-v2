@@ -1,4 +1,4 @@
-export const useDebounce = (
+export const debounced = (
   cb: CallableFunction,
   delay = 500
 ): ((...args: any[]) => any) => {

@@ -10,11 +10,11 @@ import {
   useTheme,
 } from '@mui/material';
 import { SharedComponentsCodeEditor } from '@uihub/shared/components/code-editor';
-import { useDebounce } from '@uihub/shared/utils';
+import { debounced } from '@uihub/shared/utils';
 import prettier from 'prettier';
 import graphQLParser from 'prettier/parser-babel';
 import { Resizable } from 're-resizable';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore nx react compiler can't seems to understand that this exist
@@ -50,11 +50,12 @@ const INITIAL_STJS_PROPERTIES: StjsTransformProperties = {
   result: '{}',
 };
 
+const debounceToast = debounced(toast.error, 1000);
+
 export const FeaturesStjsEditor: React.FC = () => {
   // drawer properties
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const debounceToast = useCallback(useDebounce(toast.error, 1000), []);
 
   // stjs properties
   const [transformProperties, setTransformProperties] =
@@ -218,7 +219,7 @@ export const FeaturesStjsEditor: React.FC = () => {
         <Resizable
           defaultSize={{
             height: '25vh',
-            width: '96vw',
+            width: '95vw',
           }}
         >
           <SharedComponentsCodeEditor
