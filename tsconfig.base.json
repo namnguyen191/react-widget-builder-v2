@@ -23,7 +23,8 @@
       ],
       "@uihub/shared/components/text-editor": [
         "libs/shared/components/text-editor/src/index.ts"
-      ]
+      ],
+      "@uihub/shared/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

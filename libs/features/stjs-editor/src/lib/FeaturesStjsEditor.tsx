@@ -10,9 +10,11 @@ import {
   useTheme,
 } from '@mui/material';
 import { SharedComponentsCodeEditor } from '@uihub/shared/components/code-editor';
+import { useDebounce } from '@uihub/shared/utils';
 import prettier from 'prettier';
 import graphQLParser from 'prettier/parser-babel';
-import React, { useState } from 'react';
+import { Resizable } from 're-resizable';
+import React, { useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore nx react compiler can't seems to understand that this exist
@@ -52,6 +54,7 @@ export const FeaturesStjsEditor: React.FC = () => {
   // drawer properties
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const debounceToast = useCallback(useDebounce(toast.error, 1000), []);
 
   // stjs properties
   const [transformProperties, setTransformProperties] =
@@ -112,14 +115,12 @@ export const FeaturesStjsEditor: React.FC = () => {
       template = JSON.parse(JSON.parse(val));
     } catch (err: unknown) {
       if (err instanceof Error) {
-        toast.error(err.message);
+        debounceToast(err.message);
       }
 
       if (typeof err === 'string') {
         toast.error(err);
       }
-
-      console.log(err);
     }
 
     const transformResult: any = ST.select(transformProperties.data)
@@ -190,23 +191,35 @@ export const FeaturesStjsEditor: React.FC = () => {
         Data
       </Fab>
       <div className={styles['editorsContainer']}>
-        <div className={styles['codeEditorContainer']}>
+        <Resizable
+          defaultSize={{
+            height: '60vh',
+            width: '47vw',
+          }}
+          className={styles['codeEditorContainer']}
+        >
           <SharedComponentsCodeEditor
             initialValue={`const template = ${transformProperties.template};`}
             onChange={onTemplateChange}
           />
-        </div>
-        <div
-          className={`${styles['codeEditorContainer']} ${styles['transformResult']}`}
+        </Resizable>
+        <Resizable
+          defaultSize={{
+            height: '60vh',
+            width: '47vw',
+          }}
         >
           <SharedComponentsCodeEditor
             initialValue={transformProperties.result}
             language="json"
             readonly={true}
           />
-        </div>
-        <div
-          className={`${styles['codeEditorContainer']} ${styles['transformTemplateText']}`}
+        </Resizable>
+        <Resizable
+          defaultSize={{
+            height: '25vh',
+            width: '96vw',
+          }}
         >
           <SharedComponentsCodeEditor
             enableFormat={false}
@@ -214,7 +227,7 @@ export const FeaturesStjsEditor: React.FC = () => {
             initialValue={transformProperties.stringifyTemplate}
             onChange={onStringifyTemplateChange}
           />
-        </div>
+        </Resizable>
       </div>
     </div>
   );

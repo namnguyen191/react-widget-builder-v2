@@ -6,6 +6,7 @@
     "features-stjs-editor": "libs/features/stjs-editor",
     "shared-components-code-editor": "libs/shared/components/code-editor",
     "shared-components-text-editor": "libs/shared/components/text-editor",
+    "shared-utils": "libs/shared/utils",
     "widget-builder": "apps/widget-builder",
     "widget-builder-e2e": "apps/widget-builder-e2e"
   }

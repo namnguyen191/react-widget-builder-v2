@@ -15,20 +15,18 @@
 
   .editorsContainer {
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    // display: grid;
+    // grid-template-columns: 1fr 1fr;
+    // gap: 1rem;
+    display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 
     .codeEditorContainer {
-      height: 60vh;
-
       &.transformResult {
         pointer-events: none;
-      }
-
-      &.transformTemplateText {
-        grid-column: 1 / -1;
-        height: 25vh;
       }
     }
   }
