@@ -78,7 +78,7 @@ export const SharedComponentsCodeEditor: React.FC<
         )
         .replace(/\n$/, '');
     } catch (err: any) {
-      toast(err?.message, {
+      toast.error(err?.message, {
         autoClose: false,
       });
     }

@@ -2,9 +2,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import {
-  Button,
   Divider,
   Drawer,
+  Fab,
   IconButton,
   styled,
   useTheme,
@@ -13,13 +13,13 @@ import { SharedComponentsCodeEditor } from '@uihub/shared/components/code-editor
 import prettier from 'prettier';
 import graphQLParser from 'prettier/parser-babel';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-ignore nx react compiler can't seems to understand that this exist
 import * as ST from 'stjs';
 import styles from './FeaturesStjsEditor.module.scss';
 
 const drawerWidth = '45vw';
-
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -29,12 +29,23 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-start',
 }));
 
-const TRANSFORMATION_PLACEHOLDER = 'const transformation = {};';
-const DATA_PLACEHOLDER = '{}';
-
 const prettierJsonConfig: prettier.Options = {
   parser: 'json',
   plugins: [graphQLParser],
+};
+
+type StjsTransformProperties = {
+  template: string;
+  stringifyTemplate: string;
+  data: string;
+  result: string;
+};
+
+const INITIAL_STJS_PROPERTIES: StjsTransformProperties = {
+  template: '{}',
+  stringifyTemplate: '"{}"',
+  data: '{}',
+  result: '{}',
 };
 
 export const FeaturesStjsEditor: React.FC = () => {
@@ -43,14 +54,8 @@ export const FeaturesStjsEditor: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   // stjs properties
-  const [stjsData, setStjsData] = useState<string>(DATA_PLACEHOLDER);
-  const [stjsTransformationCode, setStjsTransformationCode] = useState<string>(
-    TRANSFORMATION_PLACEHOLDER
-  );
-  const [stjsTransformationText, setStjsTransformationText] =
-    useState<string>('');
-  const [stjsTransformationResult, setStjsTransformationResult] =
-    useState<string>('{}');
+  const [transformProperties, setTransformProperties] =
+    useState<StjsTransformProperties>(INITIAL_STJS_PROPERTIES);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -60,34 +65,89 @@ export const FeaturesStjsEditor: React.FC = () => {
     setOpen(false);
   };
 
-  const onStjsCodeChange = (val: string | undefined): void => {
+  const onTemplateChange = (val: string | undefined): void => {
     if (!val) {
-      setStjsTransformationCode('');
       return;
     }
 
-    setStjsTransformationCode(val);
+    let template: string = val.split(' = ')[1];
+    // trim ; at the end if exist
+    if (template.endsWith(';')) {
+      template = template.slice(0, -1);
+    }
 
-    const template = val.split('const transformation = ')[1];
-    let transformResult: string = ST.select(JSON.parse(stjsData))
+    const transformResult: string = ST.select(
+      JSON.parse(transformProperties.data)
+    )
       .transformWith(template, null, true)
       .root();
 
-    // trim ; at the end if exist
-    if (transformResult.endsWith(';')) {
-      transformResult = transformResult.slice(0, -1);
+    let objFromTemplate: Record<string, any> | string | null = null;
+    try {
+      objFromTemplate = JSON.parse(
+        prettier.format(template, prettierJsonConfig)
+      );
+    } catch (err) {
+      objFromTemplate = template;
     }
 
-    setStjsTransformationResult(transformResult);
+    setTransformProperties((prev) => ({
+      data: prev.data,
+      template,
+      stringifyTemplate: `"${JSON.stringify(objFromTemplate).replace(
+        /"/g,
+        '\\"'
+      )}"`,
+      result: transformResult,
+    }));
   };
 
-  const onStjsDataChange = (val: string | undefined): void => {
+  const onStringifyTemplateChange = (val: string | undefined): void => {
     if (!val) {
-      setStjsData('');
       return;
     }
 
-    setStjsData(val);
+    let template = {};
+    try {
+      template = JSON.parse(JSON.parse(val));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+
+      if (typeof err === 'string') {
+        toast.error(err);
+      }
+
+      console.log(err);
+    }
+
+    const transformResult: any = ST.select(transformProperties.data)
+      .transformWith(template, null, true)
+      .root();
+
+    setTransformProperties((prev) => ({
+      stringifyTemplate: val,
+      template: JSON.stringify(template),
+      data: prev.data,
+      result: JSON.stringify(transformResult),
+    }));
+  };
+
+  const onDataChange = (val: string | undefined): void => {
+    if (!val) {
+      return;
+    }
+
+    const transformResult: string = ST.select(val, null, true)
+      .transformWith(transformProperties.template, null, true)
+      .root();
+
+    setTransformProperties((prev) => ({
+      ...prev,
+      data: val,
+      result: transformResult,
+    }));
   };
 
   return (
@@ -115,39 +175,44 @@ export const FeaturesStjsEditor: React.FC = () => {
         </DrawerHeader>
         <Divider />
         <SharedComponentsCodeEditor
-          initialValue={stjsData}
-          onChange={onStjsDataChange}
+          initialValue={transformProperties.data}
+          onChange={onDataChange}
           language="json"
           prettierConfigOverride={prettierJsonConfig}
         />
       </Drawer>
-      <Button
-        id="customized-button"
-        aria-controls={open ? 'customized-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        variant="contained"
-        disableElevation
-        onClick={handleDrawerOpen}
-        endIcon={<DataObjectIcon />}
+      <Fab
+        variant="extended"
         className={styles['dataButton']}
+        onClick={handleDrawerOpen}
       >
+        <DataObjectIcon sx={{ mr: 1 }} />
         Data
-      </Button>
+      </Fab>
       <div className={styles['editorsContainer']}>
         <div className={styles['codeEditorContainer']}>
           <SharedComponentsCodeEditor
-            initialValue={stjsTransformationCode}
-            onChange={onStjsCodeChange}
+            initialValue={`const template = ${transformProperties.template};`}
+            onChange={onTemplateChange}
           />
         </div>
         <div
           className={`${styles['codeEditorContainer']} ${styles['transformResult']}`}
         >
           <SharedComponentsCodeEditor
-            initialValue={stjsTransformationResult}
+            initialValue={transformProperties.result}
             language="json"
             readonly={true}
+          />
+        </div>
+        <div
+          className={`${styles['codeEditorContainer']} ${styles['transformTemplateText']}`}
+        >
+          <SharedComponentsCodeEditor
+            enableFormat={false}
+            language="text"
+            initialValue={transformProperties.stringifyTemplate}
+            onChange={onStringifyTemplateChange}
           />
         </div>
       </div>
