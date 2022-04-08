@@ -13290,6 +13290,7 @@ if (appContainer) {
     var root = (0,client/* createRoot */.s)(appContainer);
     root.render(/*#__PURE__*/ (0,jsx_runtime.jsx)(react.StrictMode, {
         children: /*#__PURE__*/ (0,jsx_runtime.jsx)(react_router_dom/* BrowserRouter */.VK, {
+            basename: "/react-widget-builder-v2",
             children: /*#__PURE__*/ (0,jsx_runtime.jsx)(CssBaseline_CssBaseline, {
                 children: /*#__PURE__*/ (0,jsx_runtime.jsx)(app_App, {})
             })
