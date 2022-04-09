@@ -12,7 +12,7 @@ if (appContainer) {
 
   root.render(
     <StrictMode>
-      <BrowserRouter>
+      <BrowserRouter basename="/react-widget-builder-v2">
         <CssBaseline>
           <App />
         </CssBaseline>
