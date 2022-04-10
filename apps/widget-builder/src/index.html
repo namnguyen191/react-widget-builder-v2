@@ -15,5 +15,19 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/assets/serviceworker.js')
+            .then((reg) => {
+              console.log('service worker registered successfully');
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }
+    </script>
   </body>
 </html>
