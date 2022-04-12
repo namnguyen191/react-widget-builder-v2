@@ -13295,7 +13295,7 @@ function register(config) {
     if ("serviceWorker" in navigator) {
         var ref1;
         // The URL constructor is available in all browsers that support SW.
-        var publicUrl = new URL((ref1 = ({"NODE_ENV":"production","NX_CLI_SET":"true","NX_INVOKED_BY_RUNNER":"true","NX_WORKSPACE_ROOT":"/Users/nam/Desktop/projects/uihub","NX_TERMINAL_OUTPUT_PATH":"/Users/nam/Desktop/projects/uihub/node_modules/.cache/nx/terminalOutputs/cc4ba278244ec6c1319cd27f5d0b1abbb4a02578d198eb87e98d613cc9471d59","NX_FORWARD_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"widget-builder","NX_TASK_HASH":"cc4ba278244ec6c1319cd27f5d0b1abbb4a02578d198eb87e98d613cc9471d59"})["PUBLIC_URL"]) != null ? ref1 : "", window.location.href);
+        var publicUrl = new URL((ref1 = ({"NODE_ENV":"production","NX_CLI_SET":"true","NX_INVOKED_BY_RUNNER":"true","NX_WORKSPACE_ROOT":"/Users/nam/Desktop/projects/uihub","NX_TERMINAL_OUTPUT_PATH":"/Users/nam/Desktop/projects/uihub/node_modules/.cache/nx/terminalOutputs/d5ac7f64b308b2f4855dd20998559bc0c62fcfb60fc5f3bf6ae961449e4ef738","NX_FORWARD_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"widget-builder","NX_TASK_HASH":"d5ac7f64b308b2f4855dd20998559bc0c62fcfb60fc5f3bf6ae961449e4ef738"})["PUBLIC_URL"]) != null ? ref1 : "", window.location.href);
         if (publicUrl.origin !== window.location.origin) {
             // Our service worker won't work if PUBLIC_URL is on a different origin
             // from what our page is served on. This might happen if a CDN is used to
@@ -13304,7 +13304,7 @@ function register(config) {
         }
         window.addEventListener("load", function() {
             var ref;
-            var swUrl = "" + ((ref = ({"NODE_ENV":"production","NX_CLI_SET":"true","NX_INVOKED_BY_RUNNER":"true","NX_WORKSPACE_ROOT":"/Users/nam/Desktop/projects/uihub","NX_TERMINAL_OUTPUT_PATH":"/Users/nam/Desktop/projects/uihub/node_modules/.cache/nx/terminalOutputs/cc4ba278244ec6c1319cd27f5d0b1abbb4a02578d198eb87e98d613cc9471d59","NX_FORWARD_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"widget-builder","NX_TASK_HASH":"cc4ba278244ec6c1319cd27f5d0b1abbb4a02578d198eb87e98d613cc9471d59"})["PUBLIC_URL"]) != null ? ref : "") + "/service-worker.js";
+            var swUrl = "" + ((ref = ({"NODE_ENV":"production","NX_CLI_SET":"true","NX_INVOKED_BY_RUNNER":"true","NX_WORKSPACE_ROOT":"/Users/nam/Desktop/projects/uihub","NX_TERMINAL_OUTPUT_PATH":"/Users/nam/Desktop/projects/uihub/node_modules/.cache/nx/terminalOutputs/d5ac7f64b308b2f4855dd20998559bc0c62fcfb60fc5f3bf6ae961449e4ef738","NX_FORWARD_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"widget-builder","NX_TASK_HASH":"d5ac7f64b308b2f4855dd20998559bc0c62fcfb60fc5f3bf6ae961449e4ef738"})["PUBLIC_URL"]) != null ? ref : "") + "/service-worker.js";
             if (isLocalhost) {
                 // This is running on localhost. Let's check if a service worker still exists or not.
                 checkValidServiceWorker(swUrl, config);
