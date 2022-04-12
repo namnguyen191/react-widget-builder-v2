@@ -5173,6 +5173,31 @@ class StaleWhileRevalidate extends Strategy_Strategy {
 ;// CONCATENATED MODULE: ../../node_modules/workbox-strategies/index.mjs
 
 ;// CONCATENATED MODULE: ./src/service-worker/service-worker-workbox.ts
+function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
+    return arr2;
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */ // This service worker can be customized!
 // See https://developers.google.com/web/tools/workbox/modules
@@ -5186,12 +5211,17 @@ clientsClaim();
 // Their URLs are injected into the manifest variable below.
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching due to webpack InjectManifest config
-precacheAndRoute([{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/17.80449034e3605541.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/17.d83e9543685607e1.css'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/450.52f862fec34f113a.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/542.b546aad641f7a3b6.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/754.ff721233207913eb.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/938.ff05ee005c182502.esm.js'},{'revision':'d41d8cd98f00b204e9800998ecf8427e','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/.gitkeep'},{'revision':'4cfde07ddc9289c1b463f8883afd8f36','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/android-chrome-192x192.png'},{'revision':'324c9202aedebd36d69de92ae6476d85','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/android-chrome-512x512.png'},{'revision':'d761e98db8c2a1823787e0292147d98a','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/apple-touch-icon.png'},{'revision':'735b18a861016a0624f70fe07d3beee1','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon-16x16.png'},{'revision':'ec14b2d0e029f74fd81539adad97f2a9','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon-32x32.png'},{'revision':'22af6ef8f79c9021c3c7e2f15333b7cd','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon.ico'},{'revision':'4e5fe02bb714b26257aa52a0da14cf65','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/manifest.json'},{'revision':'aaa4a169f782ed3eef1467d63fb9fbe3','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/mstile-150x150.png'},{'revision':'55aef77e7e1138141eafc000e31f19bd','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/safari-pinned-tab.svg'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/common.13b0651ff5ce222c.css'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/common.3e4a42cb441610fb.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/main.6bfa1ca272aad105.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/polyfills.e3e4c0aa5b5e617e.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/runtime.de4234ead7720cd7.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/styles.ef46db3751d8e999.css'}]);
+var webpackManifest = [{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/17.80449034e3605541.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/17.d83e9543685607e1.css'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/450.52f862fec34f113a.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/542.b546aad641f7a3b6.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/754.ff721233207913eb.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/938.ff05ee005c182502.esm.js'},{'revision':'d41d8cd98f00b204e9800998ecf8427e','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/.gitkeep'},{'revision':'4cfde07ddc9289c1b463f8883afd8f36','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/android-chrome-192x192.png'},{'revision':'324c9202aedebd36d69de92ae6476d85','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/android-chrome-512x512.png'},{'revision':'d761e98db8c2a1823787e0292147d98a','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/apple-touch-icon.png'},{'revision':'735b18a861016a0624f70fe07d3beee1','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon-16x16.png'},{'revision':'ec14b2d0e029f74fd81539adad97f2a9','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon-32x32.png'},{'revision':'22af6ef8f79c9021c3c7e2f15333b7cd','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon.ico'},{'revision':'4e5fe02bb714b26257aa52a0da14cf65','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/manifest.json'},{'revision':'aaa4a169f782ed3eef1467d63fb9fbe3','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/mstile-150x150.png'},{'revision':'55aef77e7e1138141eafc000e31f19bd','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/safari-pinned-tab.svg'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/common.13b0651ff5ce222c.css'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/common.3e4a42cb441610fb.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/main.6bfa1ca272aad105.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/polyfills.e3e4c0aa5b5e617e.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/runtime.de4234ead7720cd7.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/styles.ef46db3751d8e999.css'}];
+console.log("Nam data is: caching files from manifest: ", webpackManifest);
+var ref;
+precacheAndRoute(_toConsumableArray(webpackManifest).concat([
+    "" + ((ref = "https://namnguyen191.github.io/react-widget-builder-v2") != null ? ref : "") + "/index.html", 
+]));
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
 var fileExtensionRegexp = new RegExp("/[^/?]+\\.[^/]+$");
-var ref;
+var ref1;
 registerRoute(// Return false to exempt requests from being fulfilled by index.html.
 function(param) {
     var request = param.request, url = param.url;
@@ -5210,7 +5240,7 @@ function(param) {
     }
     // Return true to signal that we want to use the handler.
     return true;
-}, createHandlerBoundToURL("" + ((ref = "https://namnguyen191.github.io/react-widget-builder-v2") != null ? ref : "") + "/index.html"));
+}, createHandlerBoundToURL("" + ((ref1 = "https://namnguyen191.github.io/react-widget-builder-v2") != null ? ref1 : "") + "/index.html"));
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(// Add in any other file extensions or routing criteria as needed.
