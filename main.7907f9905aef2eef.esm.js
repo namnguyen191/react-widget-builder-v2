@@ -12671,7 +12671,7 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ 59965:
+/***/ 76468:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -13278,7 +13278,119 @@ var App = function() {
 };
 /* harmony default export */ const app_App = (App);
 
+;// CONCATENATED MODULE: ./src/service-worker/serviceWorkerRegistration.ts
+// This optional code is used to register a service worker.
+// register() is not called by default.
+// This lets the app load faster on subsequent visits in production, and gives
+// it offline capabilities. However, it also means that developers (and users)
+// will only see deployed updates on subsequent visits to a page, after all the
+// existing tabs open on the page have been closed, since previously cached
+// resources are updated in the background.
+// To learn more about the benefits of this model and instructions on how to
+// opt-in, read https://cra.link/PWA
+var isLocalhost = Boolean(window.location.hostname === "localhost" || // [::1] is the IPv6 localhost address.
+window.location.hostname === "[::1]" || // 127.0.0.0/8 are considered localhost for IPv4.
+window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/));
+function register(config) {
+    if ("serviceWorker" in navigator) {
+        var ref1;
+        // The URL constructor is available in all browsers that support SW.
+        var publicUrl = new URL((ref1 = ({"NODE_ENV":"production","NX_CLI_SET":"true","NX_INVOKED_BY_RUNNER":"true","NX_WORKSPACE_ROOT":"/Users/nam/Desktop/projects/uihub","NX_TERMINAL_OUTPUT_PATH":"/Users/nam/Desktop/projects/uihub/node_modules/.cache/nx/terminalOutputs/fc39935865dc7d694dd933ea43d0983cbfc32e5afd350af8f03245e76a7782d6","NX_FORWARD_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"widget-builder","NX_TASK_HASH":"fc39935865dc7d694dd933ea43d0983cbfc32e5afd350af8f03245e76a7782d6"})["PUBLIC_URL"]) != null ? ref1 : "", window.location.href);
+        if (publicUrl.origin !== window.location.origin) {
+            // Our service worker won't work if PUBLIC_URL is on a different origin
+            // from what our page is served on. This might happen if a CDN is used to
+            // serve assets; see https://github.com/facebook/create-react-app/issues/2374
+            return;
+        }
+        window.addEventListener("load", function() {
+            var ref;
+            var swUrl = "" + ((ref = ({"NODE_ENV":"production","NX_CLI_SET":"true","NX_INVOKED_BY_RUNNER":"true","NX_WORKSPACE_ROOT":"/Users/nam/Desktop/projects/uihub","NX_TERMINAL_OUTPUT_PATH":"/Users/nam/Desktop/projects/uihub/node_modules/.cache/nx/terminalOutputs/fc39935865dc7d694dd933ea43d0983cbfc32e5afd350af8f03245e76a7782d6","NX_FORWARD_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"widget-builder","NX_TASK_HASH":"fc39935865dc7d694dd933ea43d0983cbfc32e5afd350af8f03245e76a7782d6"})["PUBLIC_URL"]) != null ? ref : "") + "/service-worker.js";
+            if (isLocalhost) {
+                // This is running on localhost. Let's check if a service worker still exists or not.
+                checkValidServiceWorker(swUrl, config);
+                // Add some additional logging to localhost, pointing developers to the
+                // service worker/PWA documentation.
+                navigator.serviceWorker.ready.then(function() {
+                    console.log("This web app is being served cache-first by a service " + "worker. To learn more, visit https://cra.link/PWA");
+                });
+            } else {
+                // Is not localhost. Just register service worker
+                registerValidSW(swUrl, config);
+            }
+        });
+    }
+}
+function registerValidSW(swUrl, config) {
+    navigator.serviceWorker.register(swUrl).then(function(registration) {
+        registration.onupdatefound = function() {
+            var installingWorker = registration.installing;
+            if (installingWorker == null) {
+                return;
+            }
+            installingWorker.onstatechange = function() {
+                if (installingWorker.state === "installed") {
+                    if (navigator.serviceWorker.controller) {
+                        // At this point, the updated precached content has been fetched,
+                        // but the previous service worker will still serve the older
+                        // content until all client tabs are closed.
+                        console.log("New content is available and will be used when all " + "tabs for this page are closed. See https://cra.link/PWA.");
+                        // Execute callback
+                        if (config && config.onUpdate) {
+                            config.onUpdate(registration);
+                        }
+                    } else {
+                        // At this point, everything has been precached.
+                        // It's the perfect time to display a
+                        // "Content is cached for offline use." message.
+                        console.log("Content is cached for offline use.");
+                        // Execute callback
+                        if (config && config.onSuccess) {
+                            config.onSuccess(registration);
+                        }
+                    }
+                }
+            };
+        };
+    }).catch(function(error) {
+        console.error("Error during service worker registration:", error);
+    });
+}
+function checkValidServiceWorker(swUrl, config) {
+    // Check if the service worker can be found. If it can't reload the page.
+    fetch(swUrl, {
+        headers: {
+            "Service-Worker": "script"
+        }
+    }).then(function(response) {
+        // Ensure service worker exists, and that we really are getting a JS file.
+        var contentType = response.headers.get("content-type");
+        if (response.status === 404 || contentType != null && contentType.indexOf("javascript") === -1) {
+            // No service worker found. Probably a different app. Reload the page.
+            navigator.serviceWorker.ready.then(function(registration) {
+                registration.unregister().then(function() {
+                    window.location.reload();
+                });
+            });
+        } else {
+            // Service worker found. Proceed as normal.
+            registerValidSW(swUrl, config);
+        }
+    }).catch(function() {
+        console.log("No internet connection found. App is running in offline mode.");
+    });
+}
+function unregister() {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.ready.then(function(registration) {
+            registration.unregister();
+        }).catch(function(error) {
+            console.error(error.message);
+        });
+    }
+}
+
 ;// CONCATENATED MODULE: ./src/main.tsx
+
 
 
 
@@ -13299,6 +13411,7 @@ if (appContainer) {
 } else {
     console.error('Cannot find element with id "root"');
 }
+register();
 
 
 /***/ }),
@@ -13386,6 +13499,6 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__(59965));
+/******/ var __webpack_exports__ = (__webpack_exec__(76468));
 /******/ }
 ]);
