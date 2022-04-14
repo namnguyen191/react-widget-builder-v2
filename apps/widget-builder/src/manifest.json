@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "https://namnguyen191.github.io/react-widget-builder-v2",
+  "start_url": "%NX_PUBLIC_URL%",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone"
