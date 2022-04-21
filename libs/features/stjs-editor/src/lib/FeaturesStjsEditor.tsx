@@ -52,6 +52,18 @@ const INITIAL_STJS_PROPERTIES: StjsTransformProperties = {
 
 const debounceToast = debounced(toast.error, 1000);
 
+const trimAllExcessWhiteSpaces = (val: string): string => {
+  return val.replace(/\s+/g, ' ').trim();
+};
+
+const trimAllLineBreaks = (val: string): string => {
+  return val.replace(/\\n/g, '');
+};
+
+const trimAllTabs = (val: string): string => {
+  return val.replace(/\\t/g, '');
+};
+
 export const FeaturesStjsEditor: React.FC = () => {
   // drawer properties
   const theme = useTheme();
@@ -60,6 +72,14 @@ export const FeaturesStjsEditor: React.FC = () => {
   // stjs properties
   const [transformProperties, setTransformProperties] =
     useState<StjsTransformProperties>(INITIAL_STJS_PROPERTIES);
+
+  const generateTemplateString = (val: string): string => {
+    let result: string = trimAllLineBreaks(val);
+    result = trimAllTabs(result);
+    result = trimAllExcessWhiteSpaces(result);
+
+    return result;
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -74,35 +94,20 @@ export const FeaturesStjsEditor: React.FC = () => {
       return;
     }
 
-    let template: string = val.split(' = ')[1];
-    // trim ; at the end if exist
-    if (template.endsWith(';')) {
-      template = template.slice(0, -1);
-    }
-
-    const transformResult: string = ST.select(
-      JSON.parse(transformProperties.data)
-    )
-      .transformWith(template, null, true)
+    const parsedData = JSON.parse(transformProperties.data);
+    const parsedVal = JSON.parse(val);
+    const transformResult: Record<string, unknown> = ST.select(parsedData)
+      .transformWith(parsedVal)
       .root();
-
-    let objFromTemplate: Record<string, any> | string | null = null;
-    try {
-      objFromTemplate = JSON.parse(
-        prettier.format(template, prettierJsonConfig)
-      );
-    } catch (err) {
-      objFromTemplate = template;
-    }
 
     setTransformProperties((prev) => ({
       data: prev.data,
-      template,
-      stringifyTemplate: `"${JSON.stringify(objFromTemplate).replace(
-        /"/g,
-        '\\"'
-      )}"`,
-      result: transformResult,
+      template: val,
+      stringifyTemplate: generateTemplateString(JSON.stringify(val)),
+      result: prettier.format(
+        JSON.stringify(transformResult),
+        prettierJsonConfig
+      ),
     }));
   };
 
@@ -141,14 +146,21 @@ export const FeaturesStjsEditor: React.FC = () => {
       return;
     }
 
-    const transformResult: string = ST.select(val, null, true)
-      .transformWith(transformProperties.template, null, true)
+    const parsedData = JSON.parse(val);
+    const parsedTemplate = JSON.parse(transformProperties.template);
+    const transformResult: Record<string, unknown> = ST.select(parsedData)
+      .transformWith(parsedTemplate)
       .root();
+
+    console.log(`Nam data is: `, typeof transformResult);
 
     setTransformProperties((prev) => ({
       ...prev,
       data: val,
-      result: transformResult,
+      result: prettier.format(
+        JSON.stringify(transformResult),
+        prettierJsonConfig
+      ),
     }));
   };
 
@@ -200,7 +212,9 @@ export const FeaturesStjsEditor: React.FC = () => {
           className={styles['codeEditorContainer']}
         >
           <SharedComponentsCodeEditor
-            initialValue={`const template = ${transformProperties.template};`}
+            initialValue={transformProperties.template}
+            language="json"
+            prettierConfigOverride={prettierJsonConfig}
             onChange={onTemplateChange}
           />
         </Resizable>
@@ -212,6 +226,7 @@ export const FeaturesStjsEditor: React.FC = () => {
         >
           <SharedComponentsCodeEditor
             initialValue={transformProperties.result}
+            prettierConfigOverride={prettierJsonConfig}
             language="json"
             readonly={true}
           />
