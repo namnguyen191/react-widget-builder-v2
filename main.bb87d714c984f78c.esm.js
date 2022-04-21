@@ -13292,7 +13292,7 @@ var isLocalhost = Boolean(window.location.hostname === "localhost" || // [::1] i
 window.location.hostname === "[::1]" || // 127.0.0.0/8 are considered localhost for IPv4.
 window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/));
 function register(config) {
-    if ("serviceWorker" in navigator) {
+    if ("serviceWorker" in navigator && "production" === "production") {
         var ref1;
         // The URL constructor is available in all browsers that support SW.
         var publicUrl = new URL((ref1 = "https://namnguyen191.github.io/react-widget-builder-v2") != null ? ref1 : "", window.location.href);

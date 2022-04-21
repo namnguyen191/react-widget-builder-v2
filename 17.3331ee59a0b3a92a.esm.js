@@ -92,6 +92,10 @@ function _instanceof(left, right) {
         return left instanceof right;
     }
 }
+var _typeof = function(obj) {
+    "@swc/helpers - typeof";
+    return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
+};
 
 
 
@@ -132,12 +136,27 @@ var INITIAL_STJS_PROPERTIES = {
     result: "{}"
 };
 var debounceToast = debounced(react_toastify_esm/* toast.error */.Am.error, 1000);
+var trimAllExcessWhiteSpaces = function(val) {
+    return val.replace(/\s+/g, " ").trim();
+};
+var trimAllLineBreaks = function(val) {
+    return val.replace(/\\n/g, "");
+};
+var trimAllTabs = function(val) {
+    return val.replace(/\\t/g, "");
+};
 var FeaturesStjsEditor = function() {
     // drawer properties
     var theme = (0,useTheme/* default */.Z)();
     var ref = react.useState(false), open = ref[0], setOpen = ref[1];
     // stjs properties
     var ref1 = (0,react.useState)(INITIAL_STJS_PROPERTIES), transformProperties = ref1[0], setTransformProperties = ref1[1];
+    var generateTemplateString = function(val) {
+        var result = trimAllLineBreaks(val);
+        result = trimAllTabs(result);
+        result = trimAllExcessWhiteSpaces(result);
+        return result;
+    };
     var handleDrawerOpen = function() {
         setOpen(true);
     };
@@ -148,24 +167,15 @@ var FeaturesStjsEditor = function() {
         if (!val) {
             return;
         }
-        var template = val.split(" = ")[1];
-        // trim ; at the end if exist
-        if (template.endsWith(";")) {
-            template = template.slice(0, -1);
-        }
-        var transformResult = st.select(JSON.parse(transformProperties.data)).transformWith(template, null, true).root();
-        var objFromTemplate = null;
-        try {
-            objFromTemplate = JSON.parse(standalone_default().format(template, prettierJsonConfig));
-        } catch (err) {
-            objFromTemplate = template;
-        }
+        var parsedData = JSON.parse(transformProperties.data);
+        var parsedVal = JSON.parse(val);
+        var transformResult = st.select(parsedData).transformWith(parsedVal).root();
         setTransformProperties(function(prev) {
             return {
                 data: prev.data,
-                template: template,
-                stringifyTemplate: '"' + JSON.stringify(objFromTemplate).replace(/"/g, '\\"') + '"',
-                result: transformResult
+                template: val,
+                stringifyTemplate: generateTemplateString(JSON.stringify(val)),
+                result: standalone_default().format(JSON.stringify(transformResult), prettierJsonConfig)
             };
         });
     };
@@ -198,11 +208,14 @@ var FeaturesStjsEditor = function() {
         if (!val) {
             return;
         }
-        var transformResult = st.select(val, null, true).transformWith(transformProperties.template, null, true).root();
+        var parsedData = JSON.parse(val);
+        var parsedTemplate = JSON.parse(transformProperties.template);
+        var transformResult = st.select(parsedData).transformWith(parsedTemplate).root();
+        console.log("Nam data is: ", typeof transformResult === "undefined" ? "undefined" : _typeof(transformResult));
         setTransformProperties(function(prev) {
             return _extends({}, prev, {
                 data: val,
-                result: transformResult
+                result: standalone_default().format(JSON.stringify(transformResult), prettierJsonConfig)
             });
         });
     };
@@ -259,7 +272,9 @@ var FeaturesStjsEditor = function() {
                         },
                         className: FeaturesStjsEditor_module.codeEditorContainer,
                         children: /*#__PURE__*/ (0,jsx_runtime.jsx)(src/* SharedComponentsCodeEditor */.N, {
-                            initialValue: "const template = " + transformProperties.template + ";",
+                            initialValue: transformProperties.template,
+                            language: "json",
+                            prettierConfigOverride: prettierJsonConfig,
                             onChange: onTemplateChange
                         })
                     }),
@@ -270,6 +285,7 @@ var FeaturesStjsEditor = function() {
                         },
                         children: /*#__PURE__*/ (0,jsx_runtime.jsx)(src/* SharedComponentsCodeEditor */.N, {
                             initialValue: transformProperties.result,
+                            prettierConfigOverride: prettierJsonConfig,
                             language: "json",
                             readonly: true
                         })
