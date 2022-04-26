@@ -8,7 +8,7 @@
 
 // @ts-ignore
 try {
-    self['workbox:core:6.5.1'] && _();
+    self['workbox:core:6.5.2'] && _();
 }
 catch (e) { }
 
@@ -21,7 +21,7 @@ catch (e) { }
 
 // @ts-ignore
 try {
-    self['workbox:expiration:6.5.1'] && _();
+    self['workbox:expiration:6.5.2'] && _();
 }
 catch (e) { }
 
@@ -34,7 +34,7 @@ catch (e) { }
 
 // @ts-ignore
 try {
-    self['workbox:precaching:6.5.1'] && _();
+    self['workbox:precaching:6.5.2'] && _();
 }
 catch (e) { }
 
@@ -47,7 +47,7 @@ catch (e) { }
 
 // @ts-ignore
 try {
-    self['workbox:routing:6.5.1'] && _();
+    self['workbox:routing:6.5.2'] && _();
 }
 catch (e) { }
 
@@ -60,7 +60,7 @@ catch (e) { }
 
 // @ts-ignore
 try {
-    self['workbox:strategies:6.5.1'] && _();
+    self['workbox:strategies:6.5.2'] && _();
 }
 catch (e) { }
 
@@ -5211,7 +5211,7 @@ clientsClaim();
 // Their URLs are injected into the manifest variable below.
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching due to webpack InjectManifest config
-var webpackManifest = [{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/17.3331ee59a0b3a92a.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/17.d83e9543685607e1.css'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/450.52f862fec34f113a.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/542.b546aad641f7a3b6.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/754.ff721233207913eb.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/938.ff05ee005c182502.esm.js'},{'revision':'4cfde07ddc9289c1b463f8883afd8f36','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/android-chrome-192x192.png'},{'revision':'324c9202aedebd36d69de92ae6476d85','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/android-chrome-512x512.png'},{'revision':'d761e98db8c2a1823787e0292147d98a','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/apple-touch-icon.png'},{'revision':'735b18a861016a0624f70fe07d3beee1','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon-16x16.png'},{'revision':'ec14b2d0e029f74fd81539adad97f2a9','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon-32x32.png'},{'revision':'22af6ef8f79c9021c3c7e2f15333b7cd','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon.ico'},{'revision':'aaa4a169f782ed3eef1467d63fb9fbe3','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/mstile-150x150.png'},{'revision':'55aef77e7e1138141eafc000e31f19bd','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/safari-pinned-tab.svg'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/common.13b0651ff5ce222c.css'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/common.3e4a42cb441610fb.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/main.bb87d714c984f78c.esm.js'},{'revision':'8e67ac7b4a4de0cf8e98c78042b2c8dc','url':'https://namnguyen191.github.io/react-widget-builder-v2/manifest.json'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/polyfills.e3e4c0aa5b5e617e.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/runtime.ef06fa6adbe92569.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/styles.ef46db3751d8e999.css'}];
+var webpackManifest = [{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/17.9d8b04984efd6509.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/17.d83e9543685607e1.css'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/542.e5573f314f30afbc.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/754.ff721233207913eb.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/938.d7ae938a99eb7baf.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/939.6aa20d391fc4e7f9.esm.js'},{'revision':'4cfde07ddc9289c1b463f8883afd8f36','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/android-chrome-192x192.png'},{'revision':'324c9202aedebd36d69de92ae6476d85','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/android-chrome-512x512.png'},{'revision':'d761e98db8c2a1823787e0292147d98a','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/apple-touch-icon.png'},{'revision':'735b18a861016a0624f70fe07d3beee1','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon-16x16.png'},{'revision':'ec14b2d0e029f74fd81539adad97f2a9','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon-32x32.png'},{'revision':'22af6ef8f79c9021c3c7e2f15333b7cd','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/favicon.ico'},{'revision':'aaa4a169f782ed3eef1467d63fb9fbe3','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/mstile-150x150.png'},{'revision':'55aef77e7e1138141eafc000e31f19bd','url':'https://namnguyen191.github.io/react-widget-builder-v2/assets/safari-pinned-tab.svg'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/common.13b0651ff5ce222c.css'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/common.d812c9864bd2711d.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/main.1765a466ed1517ef.esm.js'},{'revision':'8e67ac7b4a4de0cf8e98c78042b2c8dc','url':'https://namnguyen191.github.io/react-widget-builder-v2/manifest.json'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/polyfills.3ffb2ac76d5b2382.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/runtime.e9e44d912b00a553.esm.js'},{'revision':null,'url':'https://namnguyen191.github.io/react-widget-builder-v2/styles.ef46db3751d8e999.css'}];
 console.log("Nam data is: caching files from manifest: ", webpackManifest);
 var ref;
 precacheAndRoute(_toConsumableArray(webpackManifest).concat([
