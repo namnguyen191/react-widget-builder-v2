@@ -107,10 +107,13 @@ export const SharedComponentsCodeEditor: React.FC<
         language={language ?? 'javascript'}
         height="100%"
         options={{
+          foldingStrategy: 'auto',
+          foldingHighlight: true,
+          showFoldingControls: 'always',
+          folding: true,
           wordWrap: 'on',
           minimap: { enabled: false },
           showUnused: false,
-          folding: false,
           lineNumbersMinChars: 3,
           fontSize: 16,
           scrollBeyondLastLine: false,

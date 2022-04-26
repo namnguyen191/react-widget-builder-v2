@@ -10,7 +10,6 @@ const appContainer = document.getElementById('root');
 
 if (appContainer) {
   const root = createRoot(appContainer);
-
   root.render(
     <StrictMode>
       <BrowserRouter basename={environment.reactRouterBaseName}>
@@ -24,4 +23,6 @@ if (appContainer) {
   console.error('Cannot find element with id "root"');
 }
 
-serviceWorkerRegistration.register();
+if (environment.production) {
+  serviceWorkerRegistration.register();
+}

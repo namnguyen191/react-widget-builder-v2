@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
-    "build": "nx build",
+    "build": "nx build widget-builder --prod",
     "test": "nx test",
     "deploy": "./node_modules/gh-pages/bin/gh-pages-clean.js && gh-pages -d dist/apps/widget-builder"
   },
