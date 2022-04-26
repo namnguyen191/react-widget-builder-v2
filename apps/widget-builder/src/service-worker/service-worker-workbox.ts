@@ -17,7 +17,12 @@ clientsClaim();
 // Their URLs are injected into the manifest variable below.
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching due to webpack InjectManifest config
-precacheAndRoute(self.__WB_MANIFEST);
+const webpackManifest = self.__WB_MANIFEST;
+console.log('Nam data is: caching files from manifest: ', webpackManifest);
+precacheAndRoute([
+  ...webpackManifest,
+  `${process.env['NX_PUBLIC_URL'] ?? ''}/index.html`,
+]);
 
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
@@ -45,7 +50,7 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(`${process.env['PUBLIC_URL'] ?? ''}/index.html`)
+  createHandlerBoundToURL(`${process.env['NX_PUBLIC_URL'] ?? ''}/index.html`)
 );
 
 // An example runtime caching route for requests that aren't handled by the
