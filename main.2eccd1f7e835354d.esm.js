@@ -13295,7 +13295,7 @@ function register(config) {
     if ("serviceWorker" in navigator && "production" === "production") {
         var ref1;
         // The URL constructor is available in all browsers that support SW.
-        var publicUrl = new URL((ref1 = "https://namnguyen191.github.io/react-widget-builder-v2") != null ? ref1 : "", window.location.href);
+        var publicUrl = new URL((ref1 = "https://fullstacknam.dev/react-widget-builder-v2") != null ? ref1 : "", window.location.href);
         if (publicUrl.origin !== window.location.origin) {
             // Our service worker won't work if PUBLIC_URL is on a different origin
             // from what our page is served on. This might happen if a CDN is used to
@@ -13304,7 +13304,7 @@ function register(config) {
         }
         window.addEventListener("load", function() {
             var ref;
-            var swUrl = "" + ((ref = "https://namnguyen191.github.io/react-widget-builder-v2") != null ? ref : "") + "/service-worker.js";
+            var swUrl = "" + ((ref = "https://fullstacknam.dev/react-widget-builder-v2") != null ? ref : "") + "/service-worker.js";
             if (isLocalhost) {
                 // This is running on localhost. Let's check if a service worker still exists or not.
                 checkValidServiceWorker(swUrl, config);

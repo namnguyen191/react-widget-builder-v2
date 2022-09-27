@@ -211,7 +211,7 @@
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
-/******/ 		__webpack_require__.p = "https://namnguyen191.github.io/react-widget-builder-v2/";
+/******/ 		__webpack_require__.p = "https://fullstacknam.dev/react-widget-builder-v2/";
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/css loading */
