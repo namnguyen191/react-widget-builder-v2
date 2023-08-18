@@ -9,8 +9,9 @@ export const stringToGraphQL = async (input: string) => {
   if (input[input.length - 1] === '"') {
     input = input.substring(0, input.length - 1);
   }
-  input = input.replace(/\\n/g, '');
-  input = input.replace(/\\/g, '');
+  input = input.replace(/\\"/g, '"');
+  input = input.replace(/\\n/g, '\n');
+
   input = await prettier.format(input, prettierGraphqlConfig);
 
   return input;
