@@ -2,6 +2,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import {
+  Container,
+  Dialog,
   Divider,
   Drawer,
   Fab,
@@ -9,16 +11,28 @@ import {
   styled,
   useTheme
 } from '@mui/material';
+import type monaco from 'monaco-editor';
 import * as prettier from 'prettier/standalone';
 import { Resizable } from 're-resizable';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import * as ST from 'stjs';
-import styles from './TransformationEditor.module.scss';
-import CodeEditor from '../../shared/components/CodeEditor';
+import CodeEditor, {
+  CodeEditorProps
+} from '../../shared/components/CodeEditor';
+import {
+  JSCodesToString,
+  StringToJSCodes,
+  trimAllExcessWhiteSpaces,
+  trimAllLineBreaks,
+  trimAllTabs
+} from '../../shared/utils/format';
+import {
+  prettierJSConfig,
+  prettierJsonConfig
+} from '../../shared/utils/prettier-configs';
 import { debounced } from '../../shared/utils/timing';
-import { prettierJsonConfig } from '../../shared/utils/prettier-configs';
-// import * as parserBabel from 'prettier/parser-babel';
+import styles from './TransformationEditor.module.scss';
 
 const drawerWidth = '45vw';
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -46,22 +60,15 @@ const INITIAL_STJS_PROPERTIES: StjsTransformProperties = {
 
 const debounceToast = debounced(toast.error, 1000);
 
-const trimAllExcessWhiteSpaces = (val: string): string => {
-  return val.replace(/\s+/g, ' ').trim();
-};
-
-const trimAllLineBreaks = (val: string): string => {
-  return val.replace(/\\n/g, '');
-};
-
-const trimAllTabs = (val: string): string => {
-  return val.replace(/\\t/g, '');
-};
 const TransformationEditor: React.FC = () => {
   // drawer properties
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
+  const [dataDrawerOpen, setDataDrawerOpen] = React.useState(false);
+  const [jsEditorDialogOpen, setJsEditorDialogOpen] = React.useState(false);
+  const [highlightedJs, setHighlightedJs] = React.useState<string>('');
+  const editedJs = React.useRef<string>('');
+  const transformTemplateEditorRef =
+    useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   // stjs properties
   const [transformProperties, setTransformProperties] =
     useState<StjsTransformProperties>(INITIAL_STJS_PROPERTIES);
@@ -75,11 +82,11 @@ const TransformationEditor: React.FC = () => {
   };
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setDataDrawerOpen(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setDataDrawerOpen(false);
   };
 
   const onTemplateChange = debounced(
@@ -164,8 +171,67 @@ const TransformationEditor: React.FC = () => {
     }));
   };
 
+  const onJSEditDialogClose = () => {
+    setJsEditorDialogOpen(false);
+    if (!transformTemplateEditorRef.current) {
+      // Handle when the dialog somehow opened before we can get the editor ref
+      return;
+    }
+
+    const stringifyJSCodes = JSCodesToString(editedJs.current);
+    const selection = transformTemplateEditorRef.current.getSelection();
+    const operation: monaco.editor.IIdentifiedSingleEditOperation = {
+      range: selection!,
+      text: stringifyJSCodes,
+      forceMoveMarkers: true
+    };
+    transformTemplateEditorRef.current.executeEdits('JsEditorDialog', [
+      operation
+    ]);
+  };
+
+  const editJSAction: CodeEditorProps['actionOnHighlightedText'] = {
+    name: 'Edit JS',
+    callBack: async (highlightedText, editor) => {
+      const prettifyJsCodes = await prettier.format(
+        StringToJSCodes(highlightedText),
+        prettierJSConfig
+      );
+      editedJs.current = highlightedText;
+      setHighlightedJs(prettifyJsCodes);
+      setJsEditorDialogOpen(true);
+      transformTemplateEditorRef.current = editor;
+    }
+  };
+
+  const onJSEdit = (val: string | undefined) => {
+    if (!val) {
+      return;
+    }
+
+    editedJs.current = val;
+  };
+
   return (
     <div className={styles['container']}>
+      <Dialog
+        open={jsEditorDialogOpen}
+        onClose={onJSEditDialogClose}
+        fullScreen={true}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '5rem'
+        }}
+      >
+        <Container style={{ height: '100%', width: '50vw', padding: 0 }}>
+          <CodeEditor
+            initialValue={highlightedJs}
+            prettierConfigOverride={prettierJSConfig}
+            onChange={onJSEdit}
+          />
+        </Container>
+      </Dialog>
       <Drawer
         sx={{
           width: drawerWidth,
@@ -176,7 +242,7 @@ const TransformationEditor: React.FC = () => {
         }}
         variant="persistent"
         anchor="right"
-        open={open}
+        open={dataDrawerOpen}
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -216,6 +282,7 @@ const TransformationEditor: React.FC = () => {
             language="json"
             prettierConfigOverride={prettierJsonConfig}
             onChange={onTemplateChange}
+            actionOnHighlightedText={editJSAction}
           />
         </Resizable>
         <Resizable

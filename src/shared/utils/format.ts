@@ -25,3 +25,36 @@ export const graphQLToString = (input: string) => {
 
   return `"${input}"`;
 };
+
+export const StringToJSCodes = (input: string) => {
+  input = input.replace(/\\"/g, '"').replace(/\\n/g, '\n');
+  return input;
+};
+
+export const JSCodesToString = (input: string) => {
+  input = input.trim();
+
+  // STJS doesn't like semi colon at the end
+  if (input[input.length - 1] === ';') {
+    input = input.substring(0, input.length - 1);
+  }
+
+  input = input
+    .replace(/"/g, '\\"')
+    .replace(/\r?\n|\r/g, '')
+    .replace(/\s\s/g, '');
+
+  return input;
+};
+
+export const trimAllExcessWhiteSpaces = (val: string): string => {
+  return val.replace(/\s+/g, ' ').trim();
+};
+
+export const trimAllLineBreaks = (val: string): string => {
+  return val.replace(/\\n/g, '');
+};
+
+export const trimAllTabs = (val: string): string => {
+  return val.replace(/\\t/g, '');
+};

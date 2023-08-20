@@ -2,8 +2,8 @@ import MonacoEditor from '@monaco-editor/react';
 import Button from '@mui/material/Button';
 import type monaco from 'monaco-editor';
 import { Options } from 'prettier';
-import * as prettier from 'prettier/standalone';
 import parser from 'prettier/parser-babel';
+import * as prettier from 'prettier/standalone';
 import { useRef } from 'react';
 import { toast } from 'react-toastify';
 import styles from './CodeEditor.module.scss';
@@ -27,6 +27,15 @@ export type CodeEditorProps = {
   theme?: 'vs-dark' | 'light';
   /** Control whether the editor is readonly. Default is false */
   readonly?: boolean;
+  /** Customize right click on highlighted text. Call back return the highlighted text and the editor instance */
+  actionOnHighlightedText?: {
+    name: string;
+    callBack: (
+      highlightedText: string,
+      editor: monaco.editor.IStandaloneCodeEditor
+    ) => void;
+  };
+  actions?: monaco.editor.IActionDescriptor[];
 };
 
 const CodeEditor: React.FC<CodeEditorProps> = (props) => {
@@ -37,7 +46,8 @@ const CodeEditor: React.FC<CodeEditorProps> = (props) => {
     prettierConfigOverride,
     enableFormat = true,
     theme = 'vs-dark',
-    readonly = false
+    readonly = false,
+    actionOnHighlightedText
   } = props;
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -46,6 +56,33 @@ const CodeEditor: React.FC<CodeEditorProps> = (props) => {
     editor: monaco.editor.IStandaloneCodeEditor
   ): void => {
     editorRef.current = editor;
+    if (actionOnHighlightedText) {
+      const { name, callBack } = actionOnHighlightedText;
+      const action: monaco.editor.IActionDescriptor = {
+        // An unique identifier of the contributed action.
+        id: 'highlighted-text-action',
+
+        // A label of the action that will be presented to the user.
+        label: name,
+
+        contextMenuGroupId: 'navigation',
+
+        // Method that will be executed when the action is triggered.
+        // @param editor The editor instance is passed in as a convenience
+        run: function (ed) {
+          if (!editorRef.current) {
+            return;
+          }
+
+          const highlightedText = ed
+            .getModel()!
+            .getValueInRange(editorRef.current.getSelection()!);
+
+          callBack(highlightedText, editorRef.current);
+        }
+      };
+      editorRef.current.addAction(action);
+    }
   };
 
   const handleEditorChange = (value: string | undefined): void => {
