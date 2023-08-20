@@ -7,7 +7,7 @@
     "dev": "vite",
     "test": "vitest",
     "build": "tsc && vite build",
-    "build-gh-page": "tsc && vite build --out-dir dist --base /react-video-player/",
+    "build-gh-page": "tsc && vite build --out-dir dist --base /react-widget-builder-v2/",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
