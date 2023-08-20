@@ -1,27 +1,25 @@
-# React + TypeScript + Vite
+# Widget builder. Built with Vite and React!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features:
 
-Currently, two official plugins are available:
+### GraphQL Editor:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- De-stringify and beautify GraphQL query
+- Stringify GraphQL query to match Widget format
 
-## Expanding the ESLint configuration
+### Transformation (resource template) Editor:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- De-stringify and beautify resource template
+- Stringify resource template to match Widget format
+- JS editor for to edit resource template with ease
 
-- Configure the top-level `parserOptions` property like this:
+## Set-up for local development
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+### Requirements: NodeJS 18
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Steps:
+
+- Run `npm install` to install all dependencies
+- Run `npm run dev` to start local development server
+- Run `npm run lint` to apply linting
+- Run `npm run test` to start all tests
