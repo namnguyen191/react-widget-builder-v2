@@ -8,17 +8,17 @@ const GraphQLEditor: React.FC = () => {
   const [graphqlCode, setGraphqlCode] = useState<string>('');
   const [graphqlText, setGraphqlText] = useState<string>('');
 
-  const onGraphqlCodeChange = (val: string | undefined): void => {
+  const onGraphqlCodeChange = debounce((val: string | undefined): void => {
     if (!val) {
       return setGraphqlText('');
     }
 
-    val = val.trim();
     setGraphqlCode(val);
-
+    // trim after setting graphql code to avoid cursor jumping
+    val = val.trim();
     const convertedGraphqlText = graphQLToString(val);
     setGraphqlText(convertedGraphqlText);
-  };
+  }, 500);
 
   const onGraphqlTextChange = debounce(
     async (val: string | undefined): Promise<void> => {
