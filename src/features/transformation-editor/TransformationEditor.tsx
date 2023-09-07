@@ -171,6 +171,19 @@ const TransformationEditor: React.FC = () => {
     }));
   };
 
+  const generateJSAutoComplete = () => {
+    const parsedData = JSON.parse(transformProperties.data);
+    let generatedJS = '';
+    for (const [key, val] of Object.entries(parsedData)) {
+      generatedJS += `this.${key} = ${JSON.stringify(val)};`;
+    }
+
+    return {
+      language: 'javascript',
+      data: generatedJS
+    };
+  };
+
   const onJSEditDialogClose = () => {
     setJsEditorDialogOpen(false);
     if (!transformTemplateEditorRef.current) {
@@ -229,6 +242,7 @@ const TransformationEditor: React.FC = () => {
             initialValue={highlightedJs}
             prettierConfigOverride={prettierJSConfig}
             onChange={onJSEdit}
+            addToAutoComplete={generateJSAutoComplete()}
           />
         </Container>
       </Dialog>

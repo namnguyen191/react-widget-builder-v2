@@ -1,4 +1,4 @@
-import MonacoEditor from '@monaco-editor/react';
+import MonacoEditor, { Monaco } from '@monaco-editor/react';
 import Button from '@mui/material/Button';
 import type monaco from 'monaco-editor';
 import { Options } from 'prettier';
@@ -35,7 +35,12 @@ export type CodeEditorProps = {
       editor: monaco.editor.IStandaloneCodeEditor
     ) => void;
   };
-  actions?: monaco.editor.IActionDescriptor[];
+
+  /** Add additional item to auto complete */
+  addToAutoComplete?: {
+    language: string;
+    data: string;
+  };
 };
 
 const CodeEditor: React.FC<CodeEditorProps> = (props) => {
@@ -47,15 +52,21 @@ const CodeEditor: React.FC<CodeEditorProps> = (props) => {
     enableFormat = true,
     theme = 'vs-dark',
     readonly = false,
-    actionOnHighlightedText
+    actionOnHighlightedText,
+    addToAutoComplete
   } = props;
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
   const handleEditorDidMount = (
-    editor: monaco.editor.IStandaloneCodeEditor
+    editor: monaco.editor.IStandaloneCodeEditor,
+    monaco: Monaco
   ): void => {
     editorRef.current = editor;
+    if (addToAutoComplete) {
+      const { data, language } = addToAutoComplete;
+      monaco.editor.createModel(data, language);
+    }
     if (actionOnHighlightedText) {
       const { name, callBack } = actionOnHighlightedText;
       const action: monaco.editor.IActionDescriptor = {
