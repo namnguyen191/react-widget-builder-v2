@@ -41,7 +41,7 @@ export const JSCodesToString = (input: string) => {
 
   input = input
     .replace(/"/g, '\\"')
-    .replace(/\r?\n|\r/g, '')
+    .replace(/\r?\n|\r/g, ' ')
     .replace(/\s\s/g, '');
 
   return input;
