@@ -1,17 +1,17 @@
 import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material';
-import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Home from './Home';
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
+import { createTheme, MenuItem } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Home from './Home';
+import Page from './shared/components/Page';
 
 const FeaturesGraphql = lazy(
   () => import('./features/grapql-editor/GraphQLEditor')
@@ -39,6 +39,22 @@ const Appbar: React.FC = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Widget Builder
           </Typography>
+          <MenuItem
+            component={Link}
+            to={'/graphql'}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Typography>GraphQL Editor</Typography>
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to={'/stjs-editor'}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Typography>Transformation Editor</Typography>
+          </MenuItem>
         </Toolbar>
       </AppBar>
     </Box>
@@ -59,9 +75,30 @@ const App: React.FC = () => {
       <Appbar />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/graphql" element={<FeaturesGraphql />} />
-          <Route path="/stjs-editor" element={<FeaturesStjsEditor />} />
+          <Route
+            path="/"
+            element={
+              <Page title="Widget Builder">
+                <Home />
+              </Page>
+            }
+          />
+          <Route
+            path="/graphql"
+            element={
+              <Page title="GraphQL Editor">
+                <FeaturesGraphql />
+              </Page>
+            }
+          />
+          <Route
+            path="/stjs-editor"
+            element={
+              <Page title="Transformation Editor">
+                <FeaturesStjsEditor />
+              </Page>
+            }
+          />
         </Routes>
       </Suspense>
     </ThemeProvider>
