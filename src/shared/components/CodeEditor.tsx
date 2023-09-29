@@ -1,10 +1,10 @@
 import MonacoEditor, { Monaco } from '@monaco-editor/react';
 import Button from '@mui/material/Button';
-import type monaco from 'monaco-editor';
+import monaco from 'monaco-editor';
 import { Options } from 'prettier';
 import parser from 'prettier/parser-babel';
 import * as prettier from 'prettier/standalone';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import styles from './CodeEditor.module.scss';
 
@@ -57,6 +57,15 @@ const CodeEditor: React.FC<CodeEditorProps> = (props) => {
   } = props;
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const autoCompleteModelRef = useRef<monaco.editor.ITextModel | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (addToAutoComplete && autoCompleteModelRef.current) {
+        autoCompleteModelRef.current.dispose();
+      }
+    };
+  }, []);
 
   const handleEditorDidMount = (
     editor: monaco.editor.IStandaloneCodeEditor,
@@ -65,7 +74,9 @@ const CodeEditor: React.FC<CodeEditorProps> = (props) => {
     editorRef.current = editor;
     if (addToAutoComplete) {
       const { data, language } = addToAutoComplete;
-      monaco.editor.createModel(data, language);
+
+      const model = monaco.editor.createModel(data, language);
+      autoCompleteModelRef.current = model;
     }
     if (actionOnHighlightedText) {
       const { name, callBack } = actionOnHighlightedText;

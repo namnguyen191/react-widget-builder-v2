@@ -150,26 +150,29 @@ const TransformationEditor: React.FC = () => {
     }));
   };
 
-  const onDataChange = async (val: string | undefined): Promise<void> => {
-    if (!val) {
-      return;
-    }
+  const onDataChange = debounced(
+    async (val: string | undefined): Promise<void> => {
+      if (!val) {
+        return;
+      }
 
-    const parsedData = JSON.parse(val);
-    const parsedTemplate = JSON.parse(transformProperties.template);
-    const transformResult: Record<string, unknown> = ST.select(parsedData)
-      .transformWith(parsedTemplate)
-      .root() as Record<string, unknown>;
-    const prettifiedTransformedResult = await prettier.format(
-      JSON.stringify(transformResult),
-      prettierJsonConfig
-    );
-    setTransformProperties((prev) => ({
-      ...prev,
-      data: val,
-      result: prettifiedTransformedResult
-    }));
-  };
+      const parsedData = JSON.parse(val);
+      const parsedTemplate = JSON.parse(transformProperties.template);
+      const transformResult: Record<string, unknown> = ST.select(parsedData)
+        .transformWith(parsedTemplate)
+        .root() as Record<string, unknown>;
+      const prettifiedTransformedResult = await prettier.format(
+        JSON.stringify(transformResult),
+        prettierJsonConfig
+      );
+      setTransformProperties((prev) => ({
+        ...prev,
+        data: val,
+        result: prettifiedTransformedResult
+      }));
+    },
+    2000
+  );
 
   const generateJSAutoComplete = () => {
     const parsedData = JSON.parse(transformProperties.data);
@@ -206,10 +209,16 @@ const TransformationEditor: React.FC = () => {
   const editJSAction: CodeEditorProps['actionOnHighlightedText'] = {
     name: 'Edit JS',
     callBack: async (highlightedText, editor) => {
-      const prettifyJsCodes = await prettier.format(
-        StringToJSCodes(highlightedText),
-        prettierJSConfig
-      );
+      let prettifyJsCodes = '';
+      try {
+        prettifyJsCodes = await prettier.format(
+          StringToJSCodes(highlightedText),
+          prettierJSConfig
+        );
+      } catch (_err) {
+        console.warn('JS syntax error detected');
+        prettifyJsCodes = StringToJSCodes(highlightedText);
+      }
       editedJs.current = highlightedText;
       setHighlightedJs(prettifyJsCodes);
       setJsEditorDialogOpen(true);
