@@ -39,10 +39,7 @@ export const JSCodesToString = (input: string) => {
     input = input.substring(0, input.length - 1);
   }
 
-  input = input
-    .replace(/"/g, '\\"')
-    .replace(/\r?\n|\r/g, ' ')
-    .replace(/\s\s/g, '');
+  input = input.replace(/"/g, '\\"');
 
   return input;
 };
