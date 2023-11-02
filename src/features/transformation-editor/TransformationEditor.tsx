@@ -17,6 +17,7 @@ import { Resizable } from 're-resizable';
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import * as ST from 'stjs';
+import { minify } from 'terser';
 import CodeEditor, {
   CodeEditorProps
 } from '../../shared/components/CodeEditor';
@@ -187,14 +188,20 @@ const TransformationEditor: React.FC = () => {
     };
   };
 
-  const onJSEditDialogClose = () => {
+  const onJSEditDialogClose = async () => {
     setJsEditorDialogOpen(false);
     if (!transformTemplateEditorRef.current) {
       // Handle when the dialog somehow opened before we can get the editor ref
       return;
     }
 
-    const stringifyJSCodes = JSCodesToString(editedJs.current);
+    const { code: minifiedJs } = await minify(editedJs.current, {
+      sourceMap: false,
+      mangle: false,
+      compress: false
+    });
+
+    const stringifyJSCodes = JSCodesToString(minifiedJs ?? '');
     const selection = transformTemplateEditorRef.current.getSelection();
     const operation: monaco.editor.IIdentifiedSingleEditOperation = {
       range: selection!,
