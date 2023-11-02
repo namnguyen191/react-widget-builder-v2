@@ -246,7 +246,7 @@ const TransformationEditor: React.FC = () => {
           padding: '5rem'
         }}
       >
-        <Container style={{ height: '100%', width: '50vw', padding: 0 }}>
+        <Container style={{ height: '100%', width: '80vw', padding: 0 }}>
           <CodeEditor
             initialValue={highlightedJs}
             prettierConfigOverride={prettierJSConfig}
