@@ -19,6 +19,11 @@ const FeaturesGraphql = lazy(
 const FeaturesStjsEditor = lazy(
   () => import('./features/transformation-editor/TransformationEditor')
 );
+const FeaturesTransformationEditor = lazy(() =>
+  import('./features/transformation-editor-v2/TransformationEditorV2').then(
+    (module) => ({ default: module.TransformationEditorV2 })
+  )
+);
 
 const Appbar: React.FC = () => {
   return (
@@ -49,11 +54,19 @@ const Appbar: React.FC = () => {
           </MenuItem>
           <MenuItem
             component={Link}
+            to={'/transformation'}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Typography>Transformation Editor (New)</Typography>
+          </MenuItem>
+          <MenuItem
+            component={Link}
             to={'/stjs-editor'}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Typography>Transformation Editor</Typography>
+            <Typography>Transformation Editor (Old)</Typography>
           </MenuItem>
         </Toolbar>
       </AppBar>
@@ -94,8 +107,16 @@ const App: React.FC = () => {
           <Route
             path="/stjs-editor"
             element={
-              <Page title="Transformation Editor">
+              <Page title="Transformation Editor (Old)">
                 <FeaturesStjsEditor />
+              </Page>
+            }
+          />
+          <Route
+            path="/transformation"
+            element={
+              <Page title="Transformation Editor (New)">
+                <FeaturesTransformationEditor />
               </Page>
             }
           />

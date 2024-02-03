@@ -1,0 +1,28 @@
+.container {
+  position: relative;
+  margin: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  .dataButton {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .editorsContainer {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    .codeEditorContainer {
+      &.transformResult {
+        pointer-events: none;
+      }
+    }
+  }
+}
