@@ -201,11 +201,11 @@ const TransformationEditor: React.FC = () => {
       compress: false
     });
 
-    const stringifyJSCodes = JSCodesToString(minifiedJs ?? '');
+    const stringifiedJsCodes = JSCodesToString(minifiedJs ?? '');
     const selection = transformTemplateEditorRef.current.getSelection();
     const operation: monaco.editor.IIdentifiedSingleEditOperation = {
       range: selection!,
-      text: stringifyJSCodes,
+      text: stringifiedJsCodes,
       forceMoveMarkers: true
     };
     transformTemplateEditorRef.current.executeEdits('JsEditorDialog', [

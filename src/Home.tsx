@@ -44,15 +44,15 @@ const Home: React.FC = () => {
                 Editor
               </Typography>
               <Typography sx={{ mb: 1.5 }} variant="h5" component="div">
-                Stjs Transformation
+                Transformation editor
               </Typography>
               <Typography variant="body2">
                 A better editor for your transformation function
               </Typography>
             </CardContent>
             <CardActions>
-              <Link to="/stjs-editor">
-                <Button size="small">Go to Stjs Editor!</Button>
+              <Link to="/transformation">
+                <Button size="small">Go Transformation editor!</Button>
               </Link>
             </CardActions>
           </Card>

@@ -31,6 +31,13 @@ export const StringToJSCodes = (input: string) => {
   return input;
 };
 
+export const StringToJSCodesV2 = (input: string) => {
+  input = input.slice(0, -1);
+  input = input.slice(1);
+  input = input.replace(/\\"/g, '"').replace(/\\n/g, '\n');
+  return input;
+};
+
 export const JSCodesToString = (input: string) => {
   input = input.trim();
 
@@ -42,6 +49,14 @@ export const JSCodesToString = (input: string) => {
   input = input.replace(/"/g, '\\"');
 
   return input;
+};
+
+export const JSCodesToStringV2 = (input: string) => {
+  input = input.trim();
+
+  input = input.replace(/"/g, '\\"');
+
+  return `"${input}"`;
 };
 
 export const trimAllExcessWhiteSpaces = (val: string): string => {

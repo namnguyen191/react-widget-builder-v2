@@ -58,20 +58,28 @@ const CodeEditor: React.FC<CodeEditorProps> = (props) => {
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const autoCompleteModelRef = useRef<monaco.editor.ITextModel | null>(null);
+  const monacoRef = useRef<Monaco | null>(null);
 
   useEffect(() => {
-    return () => {
-      if (addToAutoComplete && autoCompleteModelRef.current) {
-        autoCompleteModelRef.current.dispose();
-      }
-    };
-  }, []);
+    if (
+      addToAutoComplete &&
+      autoCompleteModelRef.current &&
+      editorRef.current &&
+      monacoRef.current
+    ) {
+      autoCompleteModelRef.current.dispose();
+      const { data, language } = addToAutoComplete;
+      const model = monacoRef.current.editor.createModel(data, language);
+      autoCompleteModelRef.current = model;
+    }
+  }, [addToAutoComplete]);
 
   const handleEditorDidMount = (
     editor: monaco.editor.IStandaloneCodeEditor,
     monaco: Monaco
   ): void => {
     editorRef.current = editor;
+    monacoRef.current = monaco;
     if (addToAutoComplete) {
       const { data, language } = addToAutoComplete;
 
