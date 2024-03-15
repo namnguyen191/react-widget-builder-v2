@@ -18,10 +18,8 @@ export const stringToGraphQL = async (input: string) => {
 };
 
 export const graphQLToString = (input: string) => {
-  input = input
-    .replace(/"/g, '\\"')
-    .replace(/\r?\n|\r/g, ' ')
-    .replace(/\s\s/g, '');
+  input = input.replace(/"/g, '\\"').replace(/\r?\n|\r/g, ' ');
+  input = trimAllExcessWhiteSpaces(input);
 
   return `"${input}"`;
 };
