@@ -15,7 +15,7 @@
     "@babel/parser": "^7.22.10",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@monaco-editor/react": "^4.5.1",
+    "@monaco-editor/react": "^4.6.0",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.5",
     "@reduxjs/toolkit": "^2.1.0",
