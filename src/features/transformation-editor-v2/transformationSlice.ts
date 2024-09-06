@@ -52,6 +52,18 @@ const transform = (jsCode: string, data: string): string => {
   }
 };
 
+const parseData = (data: string): string => {
+  try {
+    JSON.parse(data);
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      debounceToast(`You have an error in your syntax: ${error.message}`);
+    }
+    return defaultData;
+  }
+};
+
 export const editJs = createAsyncThunk(
   'transformation/editJs',
   async (val: string) => {
@@ -122,7 +134,7 @@ export const { editData } = transformationSlice.actions;
 export const selectJs = (state: RootState): string =>
   state[TRANSFORMATION_STATE_KEY].js;
 export const selectData = (state: RootState): string =>
-  state[TRANSFORMATION_STATE_KEY].data;
+  parseData(state[TRANSFORMATION_STATE_KEY].data);
 export const selectstringifiedJs = (state: RootState): string =>
   state[TRANSFORMATION_STATE_KEY].stringifiedJs;
 export const selectTransformationResult = (state: RootState): string =>
